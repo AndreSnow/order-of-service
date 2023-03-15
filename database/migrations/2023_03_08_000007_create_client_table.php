@@ -8,13 +8,6 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     * 
-     * @DependsOn({
-     * create_product_table::class
-     * create_service_table::class
-     * create_address_table::class
-     * })
-     * 
      */
     public function up(): void
     {
@@ -26,24 +19,21 @@ return new class extends Migration
             $table->date('date_birth');
             $table->char('phone', 11);
             $table->string('email')->nullable();
-            $table->string('address_id');
+            $table->unsignedBigInteger('address_id');
             $table->foreign('address_id')
                 ->references('id')
                 ->on('address')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-            $table->integer('product_id');
+                ->constrained();
+            $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')
                 ->references('id')
                 ->on('product')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-            $table->integer('service_id');
+                ->constrained();
+            $table->unsignedBigInteger('service_id');
             $table->foreign('service_id')
                 ->references('id')
                 ->on('service')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->constrained();
             $table->timestamps();
         });
     }

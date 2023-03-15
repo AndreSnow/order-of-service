@@ -11,23 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('address', function (Blueprint $table) {
+        Schema::create('service', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->integer('zip_code');
-            $table->string('country');
-            $table->char('state', 2);
-            $table->string('city');
-            $table->string('street');
-            $table->integer('employment_id')->nullable();
+            $table->string('name');
+            $table->date('date_init');
+            $table->date('date_finish');
+            $table->double('coust');
+            $table->string('image')->nullable();
+            $table->string('description');
+            $table->unsignedBigInteger('employment_id');
             $table->foreign('employment_id')
                 ->references('id')
                 ->on('employment')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->integer('client_id')->nullable();
-            $table->foreign('client_id')
+            $table->unsignedBigInteger('status_id');
+            $table->foreign('status_id')
                 ->references('id')
-                ->on('client')
+                ->on('status')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->timestamps();
@@ -39,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('address');
+        Schema::dropIfExists('service');
     }
 };

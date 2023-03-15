@@ -8,9 +8,6 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     * 
-     * DependsOn(create_address_table::class)
-     * 
      */
     public function up(): void
     {
@@ -24,12 +21,11 @@ return new class extends Migration
             $table->string('email');
             $table->date('hiring_date');
             $table->string('specialist');
-            $table->string('address_id');
+            $table->unsignedBigInteger('address_id');
             $table->foreign('address_id')
                 ->references('id')
                 ->on('address')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->constrained();
             $table->timestamps();
         });
     }
